@@ -29,9 +29,7 @@ int getNumber(char ** matrix, int i, int j) {
 
     for (int k = i - 1; k <= i + 1 && !exit; k++) {
         for (int l = j - 1; l <= j + 1 && !exit; l++) {
-            // printf("k: %d, l: %d\n", k, l);
             
-
             if (k >= 0 && l >= 0 && k < strlen(matrix[0]) - 1 && l < strlen(matrix[0]) - 1) {
                 if (matrix[k][l] <= '9' && matrix[k][l] >= '0') {
                     // get first number
@@ -46,48 +44,34 @@ int getNumber(char ** matrix, int i, int j) {
                         matrix[k][l] = ' ';
                         l++;
                     }
-
-
                     exit = 1;
-
                 }
             }
-
-        }        
+        }
     }
-
-    // printf("number: %s\n", number);
     int finalNumber = atoi(number);
-
-
     return finalNumber;
 }
 
 int colorAdjacent(char ** matrix, int y, int x) {
     int finalNumber = 0;
+    int secondNumber = 0;
     for (int i = y - 1; i <= y + 1; i++) {
         for (int j = x - 1; j <= x + 1; j++) {
             if (i >= 0 && j >= 0 && i < strlen(matrix[0]) - 1 && j < strlen(matrix[0]) - 1) {
                 if (matrix[i][j] < '0' || matrix[i][j] > '9'){
                     if (matrix[i][j] == '.' || matrix[i][j] == ' ') {
                         matrix[i][j] = ' ';
-                        // getchar();
-                        // printMatrix(matrix, 10);
-                    } else if (matrix[i][j] < 'a' || matrix[i][j] > 'z' || matrix[i][j] < 'A' || matrix[i][j] > 'Z' || matrix[i][j] == 'x') {
-
+                    } else if (matrix[i][j] == '*') {
                         matrix[i][j] = 'x';
-
-                        // printMatrix(matrix, 10);
-                        // printf("i: %d, j: %d\n", i, j);
-                        // getchar();
-
                         finalNumber = getNumber(matrix, i, j);
-                        // printf("number: %d\n", finalNumber);
+                        secondNumber = getNumber(matrix, i, j);
                     } 
                 }
             }
         }
     }
+    finalNumber *= secondNumber;
     return finalNumber;
 }
 
